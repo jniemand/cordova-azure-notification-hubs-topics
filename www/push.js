@@ -100,6 +100,70 @@ PushNotification.prototype.unregister = function(successCallback, errorCallback,
 };
 
 /**
+ * Subscribe to push tags / topics
+ */
+
+PushNotification.prototype.subscribe = function(topic, successCallback) {
+    var errorCallback = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function () {};
+
+    if (typeof errorCallback !== 'function')  {
+        console.log('PushNotification.subscribe failure: failure parameter not a function');
+        return;
+    }
+
+    if (typeof successCallback !== 'function') {
+        console.log('PushNotification.subscribe failure: success callback parameter must be a function');
+        return;
+    }
+
+    var that = this;
+    var cleanHandlersAndPassThrough = function() {
+        if (!options) {
+            that._handlers = {
+                'registration': [],
+                'notification': [],
+                'error': []
+            };
+        }
+        successCallback();
+    };
+
+    exec(successCallback, errorCallback, 'PushNotification', 'subscribe', [topic]);
+};
+
+/**
+ * Subscribe to push tags / topics
+ */
+
+PushNotification.prototype.unsubscribe = function(topic, successCallback) {
+    var errorCallback = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function () {};
+
+    if (typeof errorCallback !== 'function')  {
+        console.log('PushNotification.unsubscribe failure: failure parameter not a function');
+        return;
+    }
+
+    if (typeof successCallback !== 'function') {
+        console.log('PushNotification.unsubscribe failure: success callback parameter must be a function');
+        return;
+    }
+
+    var that = this;
+    var cleanHandlersAndPassThrough = function() {
+        if (!options) {
+            that._handlers = {
+                'registration': [],
+                'notification': [],
+                'error': []
+            };
+        }
+        successCallback();
+    };
+
+    exec(successCallback, errorCallback, 'PushNotification', 'unsubscribe', [topic]);
+};
+
+/**
  * Call this to set the application icon badge
  */
 
